@@ -28,11 +28,11 @@ app.get("/", (req, res) => {
         res.json(result);
     });
     
-    const articles = [{
-        title: 'Test Article',
-        createdAt: new Date(),
-        description: 'Test description'
-    }];
+//     const articles = [{
+//         title: 'Test Article',
+//         createdAt: new Date(),
+//         description: 'Test description'
+//     }];
 
-   res.render('articles/index', { articles: articles});
+//    res.render('articles/index', { articles: articles});
 });
