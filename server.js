@@ -27,7 +27,7 @@ app.listen(process.env.PORT);
 
 app.get("/", async (req, res) => {
 
-    var articles;
+    //var articles;
 
     try {
         const client = await pool.connect();
@@ -35,7 +35,6 @@ app.get("/", async (req, res) => {
         const results = { 'results': (result) ? result.rows : null};
         //res.send(JSON.stringify(results));
         //res.json(results);
-        articles = results;
         client.release();
     } catch (err) {
         console.error(err);
@@ -48,5 +47,5 @@ app.get("/", async (req, res) => {
     //     description: 'Test description'
     // }];
 
-   res.render('articles/index', { articles: articles});
+   res.render('articles/index', { articles: results});
 });
