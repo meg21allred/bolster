@@ -25,7 +25,7 @@ app.use('/articles', articleRouter);
 
 app.listen(process.env.PORT);
 
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
 
     try {
         const client = await pool.connect();
