@@ -36,6 +36,7 @@ app.get("/", async (req, res) => {
         res.send(results);
         //res.json(results);
         //res.send(results[0].title);
+        console.log(results);
         client.release();
         
     } catch (err) {
