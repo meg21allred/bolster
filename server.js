@@ -34,14 +34,14 @@ app.get("/", async (req, res) => {
         const results = { 'results': (result) ? result.rows : null};
         //res.send(JSON.stringify(results));
         //res.json(results);
-        articles = JSON.stringify(results);
+        res.send(results[0].title);
         client.release();
         
     } catch (err) {
         console.error(err);
         res.send("Error " + err);
     }
-    res.send(articles.results[0].title);
+   
     // const articles = [{
     //     title: 'Test Article',
     //     createdAt: new Date(),
