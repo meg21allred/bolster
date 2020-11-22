@@ -1,5 +1,6 @@
 const express = require("express");
 const articleRouter = require('./routes/articles');
+const parser = require("body-parser");
 const { Pool } = require("pg");
 const app = express();
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
@@ -19,6 +20,8 @@ app.set('view engine', 'ejs');
 
 app.use('/articles', articleRouter);
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false}));
 // app.listen(app.get('port'), function() {
 //     console.log("now listening for connection on port: ", app.get("port"));
 // })
@@ -27,23 +30,34 @@ app.listen(process.env.PORT);
 
 app.get("/", async (req, res) => {
 
-    var articles;
-    try {
-        const client = await pool.connect();
-        const result = await client.query('SELECT * FROM blog_entries');
-        const results = { 'results': (result) ? result.rows : null};
-        var string = (JSON.stringify(results));
-        var obj = (JSON.parse(string));
-        //res.send(results);
-        //res.json(results);
-        res.send(obj[0].title);
+    pool.connect(pool, (err, client, done) => {
+        if (err) {
+            return console.error('error fetching client from pool', err);
+        }
+
+        pool.query('SELECT * FROM blog_entries', (err, result) => {
+            if(err) {
+                return console.error('erron running query', err);
+            }
+            res.render('articles/index', {articles: result.rows});
+            done();
+        });  
+    });
+    // var articles;
+    // try {
+    //     const client = await pool.connect();
+    //     //const result = await client.query('SELECT * FROM blog_entries');
+    //     //const results = { 'results': (result) ? result.rows : null};
+    //     //res.send(results);
+    //     //res.json(results);
+    //     //res.send(results[0].title);
         
-        client.release();
+    //     client.release();
         
-    } catch (err) {
-        console.error(err);
-        res.send("Error " + err);
-    }
+    // } catch (err) {
+    //     console.error(err);
+    //     res.send("Error " + err);
+    // }
    
     // const articles = [{
     //     title: 'Test Article',
