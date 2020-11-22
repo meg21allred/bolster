@@ -27,21 +27,21 @@ app.listen(process.env.PORT);
 
 app.get("/", async (req, res) => {
 
-    //var articles;
-
+    var articles;
     try {
         const client = await pool.connect();
         const result = await client.query('SELECT * FROM blog_entries');
         const results = { 'results': (result) ? result.rows : null};
         //res.send(JSON.stringify(results));
         res.json(results);
+        articles = JSON.parse(results);
         client.release();
         
     } catch (err) {
         console.error(err);
         res.send("Error " + err);
     }
-    
+    res.write(artices.results[0].title);
     // const articles = [{
     //     title: 'Test Article',
     //     createdAt: new Date(),
