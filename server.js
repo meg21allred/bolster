@@ -2,6 +2,7 @@ const express = require("express");
 const articleRouter = require('./routes/articles');
 const { Pool } = require("pg");
 const app = express();
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
 const connectionString = process.env.DATABASE_URL || "postgres://bolsterUser:bolster1521@localhost:5432/bolsterdb";
 const pool = new Pool({connectionString: connectionString});
