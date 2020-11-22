@@ -43,15 +43,9 @@ app.get("/", (req, res) => {
     // var articles;
     try {
         const client = await pool.connect();
-        const result = await client.query('SELECT * FROM blog_entries', (err, res) => {
-            if (err) {
-                return console.error('error running query', err);
-            }
-            res.render(articles/indexed, {articles: result.rows});
-            done();
-        });
-        //const results = { 'results': (result) ? result.rows : null};
-        //res.send(results);
+        const result = await client.query('SELECT * FROM blog_entries')
+        const results = { 'results': (result) ? result.rows : null};
+        res.send(results);
         //res.json(results);
         //res.send(results[0].title);
         
