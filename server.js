@@ -33,7 +33,7 @@ app.get("/", async (req, res) => {
         const result = await client.query('SELECT * FROM blog_entries');
         const results = { 'results': (result) ? result.rows : null};
         //res.send(JSON.stringify(results));
-        res.json(results);
+        //res.json(results);
         articles = JSON.parse(results);
         client.release();
         
@@ -41,7 +41,7 @@ app.get("/", async (req, res) => {
         console.error(err);
         res.send("Error " + err);
     }
-    res.send(artices.results[0].title);
+    res.send(articles.results[0].title);
     // const articles = [{
     //     title: 'Test Article',
     //     createdAt: new Date(),
