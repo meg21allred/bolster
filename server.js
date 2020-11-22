@@ -1,6 +1,6 @@
 const express = require("express");
 const articleRouter = require('./routes/articles');
-const parser = require("body-parser");
+//const parser = require("body-parser");
 //const { Pool } = require("pg");
 
 const app = express();
@@ -29,8 +29,8 @@ app.set('view engine', 'ejs');
 
 app.use('/articles', articleRouter);
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false}));
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: false}));
 // app.listen(app.get('port'), function() {
 //     console.log("now listening for connection on port: ", app.get("port"));
 // })
@@ -43,11 +43,11 @@ app.get("/", (req, res) => {
     // var articles;
     try {
         const client = await pool.connect();
-        const result = await client.query('SELECT * FROM blog_entries', (err, result) => {
+        const result = await client.query('SELECT * FROM blog_entries', (err, res) => {
             if (err) {
                 return console.error('error running query', err);
             }
-            result.render(articles/indexed, {articles: result.rows});
+            res.render(articles/indexed, {articles: result.rows});
             done();
         });
         //const results = { 'results': (result) ? result.rows : null};
