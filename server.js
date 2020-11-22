@@ -32,10 +32,14 @@ app.get("/", async (req, res) => {
     try {
         const client = await pool.connect();
         const result = await client.query('SELECT * FROM blog_entries');
-        const results = { 'results': (result) ? result.rows : null};
+        //const results = { 'results': (result) ? result.rows : null};
         //res.send(JSON.stringify(results));
-        res.json(results);
-        client.release();
+        //res.json(results);
+        //client.release();
+        for (let row of res.rows){
+            res.send(row);
+        }
+        client.end();
     } catch (err) {
         console.error(err);
         res.send("Error " + err);
