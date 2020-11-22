@@ -33,21 +33,14 @@ app.get("/", async (req, res) => {
         const client = await pool.connect();
         const result = await client.query('SELECT * FROM blog_entries');
         const results = { 'results': (result) ? result.rows : null};
-        res.send(JSON.stringify(results));
+        //res.send(JSON.stringify(results));
+        var updateArticles = JSON.stringify(results);
         client.release();
-        articles =  JSON.parse(result);
+        articles =  JSON.parse(updateArticles);
     } catch (err) {
         console.error(err);
         res.send("Error " + err);
     }
-    // let id = 1;
-    // let sql = "SELECT title, blog_date, blog_description FROM blog_entries WHERE id = $1::int";
-    // let params = [id];
-
-    // pool.query(sql, params, (result) => {
-    //     console.log(result);
-    //     res.json(result);
-    // });
     
 //     const articles = [{
 //         title: 'Test Article',
