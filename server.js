@@ -33,7 +33,7 @@ app.get("/", async (req, res) => {
         const result = await client.query('SELECT * FROM blog_entries');
         const results = { 'results': (result) ? result.rows : null};
         //res.send(JSON.stringify(results));
-        res.send(reults);
+        res.send(results);
         //res.json(results);
         //res.send(results[0].title);
         client.release();
