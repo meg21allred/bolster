@@ -6,13 +6,11 @@ const parser = require("body-parser");
 const app = express();
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
-const { Client } = require('pg');
+const { Pool } = require('pg');
 
-const client = new Client({
+const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
+  ssl: true
 });
 
 //client.connect();
@@ -41,30 +39,28 @@ app.listen(process.env.PORT);
 
 app.get("/", (req, res) => {
 
-    client.connect();
-    client.query('SELECT * FROM blog_entries;', (err, res) => {
-        if (err) throw err;
-        for (let row of res.rows) {
-          console.log(JSON.stringify(row));
-        }
-        client.end();
-      });
     
     // var articles;
-    // try {
-    //     const client = await pool.connect();
-    //     //const result = await client.query('SELECT * FROM blog_entries');
-    //     //const results = { 'results': (result) ? result.rows : null};
-    //     //res.send(results);
-    //     //res.json(results);
-    //     //res.send(results[0].title);
+    try {
+        const client = await pool.connect();
+        const result = await client.query('SELECT * FROM blog_entries', (err, result) => {
+            if (err) {
+                return console.error('error running query', err);
+            }
+            result.render(articles/indexed, {articles: result.rows});
+            done();
+        });
+        //const results = { 'results': (result) ? result.rows : null};
+        //res.send(results);
+        //res.json(results);
+        //res.send(results[0].title);
         
-    //     client.release();
+        client.release();
         
-    // } catch (err) {
-    //     console.error(err);
-    //     res.send("Error " + err);
-    // }
+    } catch (err) {
+        console.error(err);
+        res.send("Error " + err);
+    }
    
     // const articles = [{
     //     title: 'Test Article',
