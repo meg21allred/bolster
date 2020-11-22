@@ -41,7 +41,7 @@ app.listen(process.env.PORT);
 
 app.get("/", (req, res) => {
 
-    client.connect;
+    client.connect();
     client.query('SELECT * FROM blog_entries;', (err, res) => {
         if (err) throw err;
         for (let row of res.rows) {
