@@ -30,23 +30,12 @@ app.get("/", async (req, res) => {
     //var articles;
 
     try {
-        const query = 'SELELCT * FROM blog_entries';
         const client = await pool.connect();
-        client.query(query, (err, res) => {
-            if (err) {
-                console.error(err);
-                return
-            }
-            for (let row of res.rows){
-                res.send(row);
-            }
-            client.end();
-        });
-        //const result = await client.query('SELECT * FROM blog_entries');
-        //const results = { 'results': (result) ? result.rows : null};
+        const result = await client.query('SELECT * FROM blog_entries');
+        const results = { 'results': (result) ? result.rows : null};
         //res.send(JSON.stringify(results));
-        //res.json(results);
-        //client.release();
+        res.json(results);
+        client.release();
         
     } catch (err) {
         console.error(err);
