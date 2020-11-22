@@ -34,7 +34,7 @@ app.get("/", async (req, res) => {
         const result = await client.query('SELECT * FROM blog_entries');
         const results = { 'results': (result) ? result.rows : null};
         //res.send(JSON.stringify(results));
-        //res.json(results);
+        res.json(results[0]);
         client.release();
     } catch (err) {
         console.error(err);
@@ -47,5 +47,5 @@ app.get("/", async (req, res) => {
     //     description: 'Test description'
     // }];
 
-   res.render('articles/index', { articles: results});
+   //res.render('articles/index', { articles: results});
 });
