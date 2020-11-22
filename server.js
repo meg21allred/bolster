@@ -30,7 +30,7 @@ app.use(bodyParser.urlencoded({ extended: false}));
 
 app.listen(process.env.PORT);
 
-app.get("/", async (req, res) => {
+app.get("/", (req, res) => {
 
     pg.connect(pool, (err, client, done) => {
         if (err) {
