@@ -20,20 +20,20 @@ app.listen(app.get('port'), function() {
 
 app.get("/", (req, res) => {
 
-    let id = 1;
-    let sql = "SELECT title, blog_date, blog_description FROM blog_entries WHERE id = $1::int";
-    let params = [id];
+    // let id = 1;
+    // let sql = "SELECT title, blog_date, blog_description FROM blog_entries WHERE id = $1::int";
+    // let params = [id];
 
-    pool.query(sql, params, (result) => {
-        console.log(result);
-        res.json(result);
-    });
+    // pool.query(sql, params, (result) => {
+    //     console.log(result);
+    //     res.json(result);
+    // });
     
-//     const articles = [{
-//         title: 'Test Article',
-//         createdAt: new Date(),
-//         description: 'Test description'
-//     }];
+    const articles = [{
+        title: 'Test Article',
+        createdAt: new Date(),
+        description: 'Test description'
+    }];
 
-//    res.render('articles/index', { articles: articles});
+   res.render('articles/index', { articles: articles});
 });
