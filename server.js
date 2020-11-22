@@ -34,7 +34,7 @@ app.get("/", async (req, res) => {
         const results = { 'results': (result) ? result.rows : null};
         //res.send(JSON.stringify(results));
         //res.json(results);
-        articles = JSON.parse(results);
+        articles = JSON.stringify(results);
         client.release();
         
     } catch (err) {
