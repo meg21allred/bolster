@@ -1,16 +1,14 @@
 const express = require("express");
 const articleRouter = require('./routes/articles');
 //const parser = require("body-parser");
-//const { Pool } = require("pg");
 
 const app = express();
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
 const { Pool } = require('pg');
-
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: true
+    connectionString: process.env.DATABASE_URL,
+    ssl: true
 });
 
 //client.connect();
@@ -37,25 +35,19 @@ app.use('/articles', articleRouter);
 
 app.listen(process.env.PORT);
 
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
 
-    
-    // var articles;
     try {
         const client = await pool.connect();
-        const result = await client.query('SELECT * FROM blog_entries')
+        const result = await client.query('SELECT * FROM blog_entries ');
         const results = { 'results': (result) ? result.rows : null};
-        res.send(results);
-        //res.json(results);
-        //res.send(results[0].title);
-        
+        res.send(JSON.stringify(results));
         client.release();
-        
     } catch (err) {
         console.error(err);
         res.send("Error " + err);
     }
-   
+  
     // const articles = [{
     //     title: 'Test Article',
     //     createdAt: new Date(),
