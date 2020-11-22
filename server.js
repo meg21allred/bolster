@@ -1,17 +1,19 @@
 const express = require("express");
 const articleRouter = require('./routes/articles');
 const parser = require("body-parser");
-const { Pool } = require("pg");
+//const { Pool } = require("pg");
+const pg = require('pg');
 const app = express();
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
+var connect = process.env.DATABASE_URL;
 //const connectionString = process.env.DATABASE_URL|| "postgres://bolsterUser:bolster1521@localhost:5432/bolsterdb";
 //const pool = new Pool({connectionString: connectionString, ssl: true});
 
-const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: true
-});
+// const pool = new Pool({
+//     connectionString: process.env.DATABASE_URL,
+//     ssl: true
+// });
 
 //app.set("port", (process.env.PORT || 5000));
 
@@ -30,12 +32,12 @@ app.listen(process.env.PORT);
 
 app.get("/", async (req, res) => {
 
-    pool.connect(pool, (err, client, done) => {
+    pg.connect(pool, (err, client, done) => {
         if (err) {
             return console.error('error fetching client from pool', err);
         }
 
-        pool.query('SELECT * FROM blog_entries', (err, result) => {
+        client.query('SELECT * FROM blog_entries', (err, result) => {
             if(err) {
                 return console.error('erron running query', err);
             }
