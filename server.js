@@ -4,7 +4,7 @@ const parser = require("body-parser");
 //const { Pool } = require("pg");
 
 const app = express();
-process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
+//process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
 const { Client } = require('pg');
 
@@ -44,7 +44,7 @@ app.get("/", (req, res) => {
     client.query('SELECT * FROM blog_entries;', (err, res) => {
         if (err) throw err;
         for (let row of res.rows) {
-          res.send(JSON.stringify(row));
+          console.log(JSON.stringify(row));
         }
         client.end();
       });
