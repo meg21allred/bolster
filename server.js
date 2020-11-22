@@ -15,7 +15,7 @@ const client = new Client({
   }
 });
 
-client.connect();
+//client.connect();
 //const connectionString = process.env.DATABASE_URL|| "postgres://bolsterUser:bolster1521@localhost:5432/bolsterdb";
 //const pool = new Pool({connectionString: connectionString, ssl: true});
 
@@ -41,6 +41,7 @@ app.listen(process.env.PORT);
 
 app.get("/", (req, res) => {
 
+    client.connect;
     client.query('SELECT * FROM blog_entries;', (err, res) => {
         if (err) throw err;
         for (let row of res.rows) {
