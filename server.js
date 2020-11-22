@@ -27,12 +27,15 @@ app.listen(process.env.PORT);
 
 app.get("/", async (req, res) => {
 
+    var articles;
+
     try {
         const client = await pool.connect();
         const result = await client.query('SELECT * FROM blog_entries');
         const results = { 'results': (result) ? result.rows : null};
         res.send(JSON.stringify(results));
         client.release();
+        articles =  JSON.parse(result);
     } catch (err) {
         console.error(err);
         res.send("Error " + err);
@@ -52,5 +55,5 @@ app.get("/", async (req, res) => {
 //         description: 'Test description'
 //     }];
 
-//    res.render('articles/index', { articles: articles});
+   res.render('articles/index', { articles: articles});
 });
