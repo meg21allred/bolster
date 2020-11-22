@@ -38,7 +38,7 @@ app.get("/", async (req, res) => {
                 return
             }
             for (let row of res.rows){
-                console.log(row);
+                res.send(row);
             }
             client.end();
         });
