@@ -13,8 +13,8 @@ router.use(express.urlencoded({extended: false}));
 //     saveUninitialized: false
 // }));
 
-router.use(passport.initialize());
-router.use(passport.session());
+// router.use(passport.initialize());
+// router.use(passport.session());
 
 // const initializePassport = require('./passport-config');
 // initializePassport(
