@@ -8,6 +8,14 @@ const pool = new Pool({
     ssl: true
 });
 
+router.get('/login', (req, res) => {
+    res.render('login.ejs');
+})
+
+router.get('/register', (req, res) => {
+    res.render('register.ejs');
+})
+
 router.get('/new', (req, res) => {
     res.render('articles/new')
 });
