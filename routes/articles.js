@@ -58,6 +58,7 @@ router.post('/register', async (req, res) => {
         res.redirect('/articles/login')
     } catch {
         res.redirect('/articles/register')
+        console.log('register not working')
     }
 })
 
