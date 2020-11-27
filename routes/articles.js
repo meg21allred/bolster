@@ -28,21 +28,21 @@ router.get('/register', (req, res) => {
     res.render('articles/register.ejs');
 })
 
-router.post('/register', async (req, res) => {
-    try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10)
-        //don't need this with the database
-        users.push({
-            id: Date.now().toString(),
-            name: req.body.name,
-            email: req.body.email,
-            password: hashedPassword
-        })
-        res.redirect('/articles/login')
-    } catch {
-        res.redirect('/articles/register')
-    }
-})
+// router.post('/register', async (req, res) => {
+//     try {
+//         const hashedPassword = await bcrypt.hash(req.body.password, 10)
+//         //don't need this with the database
+//         users.push({
+//             id: Date.now().toString(),
+//             name: req.body.name,
+//             email: req.body.email,
+//             password: hashedPassword
+//         })
+//         res.redirect('/articles/login')
+//     } catch {
+//         res.redirect('/articles/register')
+//     }
+// })
 
 
 router.get('/new', (req, res) => {
@@ -70,9 +70,7 @@ router.post('/', async (req, res) => {
         console.error(err);
         res.send("Error " + err);
     }
-
-
-})
+});
 
 
 module.exports = router;
