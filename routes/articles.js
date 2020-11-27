@@ -1,26 +1,26 @@
 const express = require("express");
 const router = express.Router();
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
-const passport = require('passport');
-const flash = require('express-flash');
-const session = require('express-session');
+// const passport = require('passport');
+// const flash = require('express-flash');
+// const session = require('express-session');
 
 router.use(express.urlencoded({extended: false}));
-router.use(flash())
-router.use(session({
-    sercret: false,
-    resave: false,
-    saveUninitialized: false
-}));
+// router.use(flash())
+// router.use(session({
+//     sercret: false,
+//     resave: false,
+//     saveUninitialized: false
+// }));
 
 router.use(passport.initialize());
 router.use(passport.session());
 
-const initializePassport = require('./passport-config');
-initializePassport(
-    passport, 
-    username => users.find(user => user.username === username)
-);
+// const initializePassport = require('./passport-config');
+// initializePassport(
+//     passport, 
+//     username => users.find(user => user.username === username)
+// );
 
 
 const { Pool } = require('pg');
@@ -37,29 +37,29 @@ router.get('/login', (req, res) => {
     res.render('articles/login.ejs');
 })
 
-router.post('/login', (req, res) => {
+// router.post('/login', (req, res) => {
 
-});
+// });
 
 router.get('/register', (req, res) => {
     res.render('articles/register.ejs');
 })
 
-router.post('/register', async (req, res) => {
-    try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10)
-        //don't need this with the database
-        users.push({
-            id: Date.now().toString(),
-            name: req.body.name,
-            email: req.body.email,
-            password: hashedPassword
-        })
-        res.redirect('articles/login')
-    } catch {
-        res.redirect('articles/register')
-    }
-})
+// router.post('/register', async (req, res) => {
+//     try {
+//         const hashedPassword = await bcrypt.hash(req.body.password, 10)
+//         //don't need this with the database
+//         users.push({
+//             id: Date.now().toString(),
+//             name: req.body.name,
+//             email: req.body.email,
+//             password: hashedPassword
+//         })
+//         res.redirect('articles/login')
+//     } catch {
+//         res.redirect('articles/register')
+//     }
+// })
 
 
 router.get('/new', (req, res) => {
