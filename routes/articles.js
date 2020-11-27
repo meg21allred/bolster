@@ -14,7 +14,7 @@ const pool = new Pool({
 
 
 //local variable for now.. to be in the database
-const users = [];
+//const users = [];
 
 router.get('/login', (req, res) => {
     res.render('articles/login.ejs');
