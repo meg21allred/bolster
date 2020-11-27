@@ -7,5 +7,25 @@
 </head>
 <body>
     <h1>This is the register page</h1>
+    <form action="/articles/register" method="POST">
+        <div>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <div>
+            <label for="comfirmPassword">Comfirm Password</label>
+            <input type="comfirmPassword" id="comfirmPassword" name="comfirmPassword" required>
+        </div>
+        <div>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <button type="submit">Register</button>
+    </form>
+    <a href="/articles/login">Login</a>
 </body>
 </html>

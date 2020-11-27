@@ -16,6 +16,11 @@ router.get('/register', (req, res) => {
     res.render('articles/register.ejs');
 })
 
+router.post('/register', (req, res) => {
+    
+})
+
+
 router.get('/new', (req, res) => {
     res.render('articles/new')
 });
