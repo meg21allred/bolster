@@ -1,5 +1,6 @@
 const express = require("express");
 const articleRouter = require('./routes/articles');
+const bcrypt = require('bcrypt');
 
 const app = express();
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;

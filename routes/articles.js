@@ -1,6 +1,31 @@
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
+
 const express = require("express");
 const router = express.Router();
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
+const passport = require('passport');
+const flash = require('express-flash');
+const session = require('express-session');
+
+router.use(express.urlencoded({extended: false}));
+router.use(flash())
+router.use(session({
+    sercret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false
+}));
+
+router.use(passport.initialize());
+router.use(passport.session());
+
+const initializePassport = require('./passport-config');
+initializePassport(
+    passport, 
+    username => users.find(user => user.username === username)
+);
+
 
 const { Pool } = require('pg');
 const pool = new Pool({
@@ -8,16 +33,38 @@ const pool = new Pool({
     ssl: true
 });
 
+
+//local variable for now.. to be in the database
+const users = [];
+
 router.get('/login', (req, res) => {
     res.render('articles/login.ejs');
 })
+
+router.post('/login', passport.authenticate('local', {
+    successRedirect: '/',
+    failure: '/articles/login',
+    failureFlash: true
+}));
 
 router.get('/register', (req, res) => {
     res.render('articles/register.ejs');
 })
 
-router.post('/register', (req, res) => {
-    
+router.post('/register', async (req, res) => {
+    try {
+        const hashedPassword = await bcrypt.hash(req.body.password, 10)
+        //don't need this with the database
+        users.push({
+            id: Date.now().toString(),
+            name: req.body.name,
+            email: req.body.email,
+            password: hashedPassword
+        })
+        res.redirect('articles/login')
+    } catch {
+        res.redirect('articles/register')
+    }
 })
 
 
