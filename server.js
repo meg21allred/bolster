@@ -24,7 +24,7 @@ app.get("/", async (req, res) => {
         const client = await pool.connect();
         const result = await client.query('SELECT * FROM blog_entries ');
         const results = { 'results': (result) ? result.rows : null};
-        res.render('articles/index', {articles: result.rows, username: username});
+        res.render('articles/index', {articles: result.rows});
         client.release();
     } catch (err) {
         console.error(err);
