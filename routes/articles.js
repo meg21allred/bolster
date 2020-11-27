@@ -2,28 +2,8 @@ const express = require("express");
 const bodyParser = require('body-parser');
 const router = express.Router();
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
-// const passport = require('passport');
-// const flash = require('express-flash');
- const session = require('express-session');
-
- var sess;
 
 router.use(express.urlencoded({extended: true}));
-// router.use(flash())
-router.use(session({
-    sercret: "shhh..",
-    saveUninitialized: true,
-    resave: true
-}));
-
-// router.use(passport.initialize());
-// router.use(passport.session());
-
-// const initializePassport = require('./passport-config');
-// initializePassport(
-//     passport, 
-//     username => users.find(user => user.username === username)
-// );
 
 
 const { Pool } = require('pg');
@@ -37,21 +17,12 @@ const pool = new Pool({
 const users = [];
 
 router.get('/login', (req, res) => {
-    sess=req.session;
-    if(sess.username) {
-        return res.redirect('/');
-    }
-    
     res.render('articles/login.ejs');
 })
 
-router.post('/login', (req, res) => {
-    sess = req.session;
-    sess.username = req.body.username;
-    sess.password = req.body.password;
-    res.end('done');
-    res.redirect('/');
-});
+// router.post('/login', (req, res) => {
+   
+// });
 
 router.get('/register', (req, res) => {
     res.render('articles/register.ejs');
