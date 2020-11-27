@@ -1,6 +1,6 @@
 const express = require("express");
 const articleRouter = require('./routes/articles');
-const bcrypt = require('bcrypt');
+const session = require('express-session');
 
 const app = express();
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
@@ -10,6 +10,13 @@ const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: true
 });
+var sess;
+
+app.use(session({
+    sercret: "shhh..",
+    saveUninitialized: true,
+    resave: true
+}));
 
 //app.set("port", (process.env.PORT || 5000));
 
