@@ -9,11 +9,11 @@ const pool = new Pool({
 });
 
 router.get('/login', (req, res) => {
-    res.render('login.ejs');
+    res.render('articles/login.ejs');
 })
 
 router.get('/register', (req, res) => {
-    res.render('register.ejs');
+    res.render('articles/register.ejs');
 })
 
 router.get('/new', (req, res) => {
