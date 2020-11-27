@@ -1,7 +1,3 @@
-if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').config();
-}
-
 const express = require("express");
 const router = express.Router();
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
@@ -12,7 +8,7 @@ const session = require('express-session');
 router.use(express.urlencoded({extended: false}));
 router.use(flash())
 router.use(session({
-    sercret: process.env.SESSION_SECRET,
+    sercret: false,
     resave: false,
     saveUninitialized: false
 }));
@@ -41,11 +37,9 @@ router.get('/login', (req, res) => {
     res.render('articles/login.ejs');
 })
 
-router.post('/login', passport.authenticate('local', {
-    successRedirect: '/',
-    failure: '/articles/login',
-    failureFlash: true
-}));
+router.post('/login', (req, res) => {
+
+});
 
 router.get('/register', (req, res) => {
     res.render('articles/register.ejs');
