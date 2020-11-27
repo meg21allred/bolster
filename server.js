@@ -16,8 +16,6 @@ app.set('view engine', 'ejs');
 
 app.use(express.urlencoded({ extended: false}));
 
-app.listen(process.env.PORT);
-
 app.get("/", async (req, res) => {
 
     try {
@@ -34,3 +32,5 @@ app.get("/", async (req, res) => {
 });
 
 app.use('/articles', articleRouter);
+
+app.listen(process.env.PORT);

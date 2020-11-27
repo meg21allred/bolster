@@ -16,17 +16,17 @@ const pool = new Pool({
 //local variable for now.. to be in the database
 //const users = [];
 
-router.get('/login', (req, res) => {
-    res.render('articles/login.ejs');
-})
+// router.get('/login', (req, res) => {
+//     res.render('articles/login.ejs');
+// })
 
 // router.post('/login', (req, res) => {
    
 // });
 
-router.get('/register', (req, res) => {
-    res.render('articles/register.ejs');
-})
+// router.get('/register', (req, res) => {
+//     res.render('articles/register.ejs');
+// })
 
 // router.post('/register', async (req, res) => {
 //     try {
