@@ -55,9 +55,9 @@ router.post('/register', async (req, res) => {
             email: req.body.email,
             password: hashedPassword
         })
-        res.redirect('articles/login')
+        res.redirect('/login')
     } catch {
-        res.redirect('articles/register')
+        res.redirect('/register')
     }
 })
 
