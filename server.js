@@ -25,7 +25,7 @@ const app = express();
 
 
 app.get("/", (req, res) => {
-    app.send('this is the homepage');
+    res.send('this is the homepage');
     //sessions for local host
    //var user = req.session.username;
 //    var user;
