@@ -1,6 +1,6 @@
 const express = require("express");
 const articleRouter = require('./routes/articles');
-const session = require('express-session');
+//const session = require('express-session');
 const bodyParser = require('body-parser');
 const app = express();
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
@@ -11,7 +11,8 @@ const pool = new Pool({
     connectionString: connectionString, ssl: true
 });
 
-app.set(/*"port", (*/process.env.PORT /* || 5000)*/);
+//for local host
+//app.set("port", (process.env.PORT);
 
 
 app.set('view engine', 'ejs');
@@ -79,6 +80,10 @@ app.get('/random', async (req, res) => {
 
 app.use('/articles', articleRouter);
 
-app.listen(app.get('port'), () => {
-    console.log('App Started on PORT: ', app.get('port'));
-});
+//for localhost
+// app.listen(app.get('port'), () => {
+//     console.log('App Started on PORT: ', app.get('port'));
+// });
+
+//for heroku
+app.listen(process.env.PORT);
