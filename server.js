@@ -5,11 +5,11 @@ const express = require("express");
 const app = express();
 //process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
-// const { Pool } = require('pg');
-// let connectionString = process.env.DATABASE_URL; /*|| "postgres://bolster21:bolster1521@localhost:5432/bolsterdb"*/
-// const pool = new Pool({
-//     connectionString: connectionString, ssl: true
-// });
+const { Pool } = require('pg');
+let connectionString = process.env.DATABASE_URL; /*|| "postgres://bolster21:bolster1521@localhost:5432/bolsterdb"*/
+const pool = new Pool({
+    connectionString: connectionString, ssl: true
+});
 
 //for local host
 //app.set("port", (process.env.PORT);
@@ -25,24 +25,24 @@ const app = express();
 
 
 app.get("/", (req, res) => {
-    res.send('this is the homepage');
+    
     //sessions for local host
    //var user = req.session.username;
-//    var user;
-//         try {
-//             const client = await pool.connect();
-//             const result = await client.query('SELECT * FROM blog_entries ');
+   var user;
+        try {
+            const client = await pool.connect();
+            const result = await client.query('SELECT * FROM blog_entries ');
             
-//             var minimum = 0;
-//             var maximum = result.rows.length - 1;
-//             var randomnumber = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
-//             console.log(randomnumber);
-//             res.render('articles/index', {articles: result.rows, user: user, random: randomnumber});
-//             client.release();
-//         } catch (err) {
-//             console.error(err);
-//             res.send("Error " + err);
-//         }
+            var minimum = 0;
+            var maximum = result.rows.length - 1;
+            var randomnumber = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
+            res.send(result);
+            //res.render('articles/index', {articles: result.rows, user: user, random: randomnumber});
+            client.release();
+        } catch (err) {
+            console.error(err);
+            res.send("Error " + err);
+        }
     
 });
 
