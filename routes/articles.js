@@ -8,7 +8,7 @@ router.use(express.urlencoded({extended: true}));
 
 
 const { Pool } = require('pg');
-let connectionString = process.env.DATABASE_URL || "postgres://bolster21:bolster1521@localhost:5432/bolsterdb";
+let connectionString = process.env.DATABASE_URL/* || "postgres://bolster21:bolster1521@localhost:5432/bolsterdb"*/;
 const pool = new Pool({
     connectionString: connectionString, ssl: true
 });
