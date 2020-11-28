@@ -45,38 +45,38 @@ app.get("/", async (req, res) => {
     
 });
 
-// app.get('/random', async (req, res) => {
-//     try {
-//         const client = await pool.connect();
-//         const result = await client.query('SELECT * FROM blog_entries ');
+app.get('/random', async (req, res) => {
+    try {
+        const client = await pool.connect();
+        const result = await client.query('SELECT * FROM blog_entries ');
         
-//         var minimum = 0;
-//         var maximum = result.rows.length - 1;
-//         var randomnumber = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
-//         var randomBlogPost = `
-//         <div class="container" id="randomDiv">
-//           <h1 >Random blog post</h1>
-//                 <div class="card mt-4">
-//                     <div class="card-body">
-//                         <h4 class="card-title">${result.rows[randomnumber].title}</h4>
-//                         <div class="card-subtitle text-muted mb-2">
-//                         ${result.rows[randomnumber].blog_date.toLocaleDateString()}
-//                         </div>
-//                         <div class="card-text mb-2">${result.rows[randomnumber].blog_description}</div>
-//                     </div>
-//                 </div>
-//                 <br>
-//                 <button class="btn btn-success" id="randomButton" onclick="getRandomBlog()">Get New Entry</button>
+        var minimum = 0;
+        var maximum = result.rows.length - 1;
+        var randomnumber = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
+        var randomBlogPost = `
+        <div class="container" id="randomDiv">
+          <h1 >Random blog post</h1>
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <h4 class="card-title">${result.rows[randomnumber].title}</h4>
+                        <div class="card-subtitle text-muted mb-2">
+                        ${result.rows[randomnumber].blog_date.toLocaleDateString()}
+                        </div>
+                        <div class="card-text mb-2">${result.rows[randomnumber].blog_description}</div>
+                    </div>
+                </div>
+                <br>
+                <button class="btn btn-success" id="randomButton" onclick="getRandomBlog()">Get New Entry</button>
 
-//         `
-//         res.send(randomBlogPost);
-//         client.release();
+        `
+        res.send(randomBlogPost);
+        client.release();
         
-//     } catch (err) {
-//         console.error(err);
-//         res.send("Error " + err);
-//     }
-// })
+    } catch (err) {
+        console.error(err);
+        res.send("Error " + err);
+    }
+})
 
 //app.use('/articles', articleRouter);
 
