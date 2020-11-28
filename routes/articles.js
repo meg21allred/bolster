@@ -73,34 +73,34 @@ const pool = new Pool({
 // })
 
 
-router.get('/new', (req, res) => {
-    res.render('articles/new')
-});
+// router.get('/new', (req, res) => {
+//     res.render('articles/new')
+// });
 
-router.get('/id:id', (req, res) => {
-    res.send('this is the id page');
-});
+// router.get('/id:id', (req, res) => {
+//     res.send('this is the id page');
+// });
 
-router.post('/', async (req, res) => {
+// router.post('/', async (req, res) => {
 
-    var blogTitle = req.body.title;
-    var blogDescription = req.body.description;
-    var blogMarkdown = req.body.markdown;
-    var articleId = req.body.id;
+//     var blogTitle = req.body.title;
+//     var blogDescription = req.body.description;
+//     var blogMarkdown = req.body.markdown;
+//     var articleId = req.body.id;
 
-    var params = [blogTitle, blogDescription, blogMarkdown];
-    try {
-        const client = await pool.connect();
-        const result = await client.query("INSERT INTO blog_entries (title, blog_description, markdown) VALUES ($1, $2, $3)", params);
-        client.release();
-        //this redirect to the articles id page
-        //res.redirect(`/articles/id${articleId}`);
-        res.redirect('/');
-    } catch (err) {
-        console.error(err);
-        res.send("Error " + err);
-    }
-});
+//     var params = [blogTitle, blogDescription, blogMarkdown];
+//     try {
+//         const client = await pool.connect();
+//         const result = await client.query("INSERT INTO blog_entries (title, blog_description, markdown) VALUES ($1, $2, $3)", params);
+//         client.release();
+//         //this redirect to the articles id page
+//         //res.redirect(`/articles/id${articleId}`);
+//         res.redirect('/');
+//     } catch (err) {
+//         console.error(err);
+//         res.send("Error " + err);
+//     }
+// });
 
 //log out of session in local host
 // router.get('/logout', function(req,res){

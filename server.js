@@ -25,23 +25,24 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 
 app.get("/", async (req, res) => {
+    app.send('this is the homepage');
     //sessions for local host
    //var user = req.session.username;
-   var user;
-        try {
-            const client = await pool.connect();
-            const result = await client.query('SELECT * FROM blog_entries ');
+//    var user;
+//         try {
+//             const client = await pool.connect();
+//             const result = await client.query('SELECT * FROM blog_entries ');
             
-            var minimum = 0;
-            var maximum = result.rows.length - 1;
-            var randomnumber = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
-            console.log(randomnumber);
-            res.render('articles/index', {articles: result.rows, user: user, random: randomnumber});
-            client.release();
-        } catch (err) {
-            console.error(err);
-            res.send("Error " + err);
-        }
+//             var minimum = 0;
+//             var maximum = result.rows.length - 1;
+//             var randomnumber = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
+//             console.log(randomnumber);
+//             res.render('articles/index', {articles: result.rows, user: user, random: randomnumber});
+//             client.release();
+//         } catch (err) {
+//             console.error(err);
+//             res.send("Error " + err);
+//         }
     
 });
 
