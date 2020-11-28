@@ -36,8 +36,7 @@ app.get("/", async (req, res) => {
             var minimum = 0;
             var maximum = result.rows.length - 1;
             var randomnumber = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
-            res.send(result);
-            //res.render('articles/index', {articles: result.rows, user: user, random: randomnumber});
+            res.render('articles/index', {articles: result.rows, user: user, random: randomnumber});
             client.release();
         } catch (err) {
             console.error(err);
