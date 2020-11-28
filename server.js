@@ -1,25 +1,25 @@
 const express = require("express");
-const articleRouter = require('./routes/articles');
+//const articleRouter = require('./routes/articles');
 //const session = require('express-session');
-const bodyParser = require('body-parser');
+//const bodyParser = require('body-parser');
 const app = express();
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
-const { Pool } = require('pg');
-let connectionString = process.env.DATABASE_URL; /*|| "postgres://bolster21:bolster1521@localhost:5432/bolsterdb"*/
-const pool = new Pool({
-    connectionString: connectionString, ssl: true
-});
+// const { Pool } = require('pg');
+// let connectionString = process.env.DATABASE_URL; /*|| "postgres://bolster21:bolster1521@localhost:5432/bolsterdb"*/
+// const pool = new Pool({
+//     connectionString: connectionString, ssl: true
+// });
 
 //for local host
 //app.set("port", (process.env.PORT);
 
 
-app.set('view engine', 'ejs');
+// app.set('view engine', 'ejs');
 
-app.use(express.urlencoded({ extended: false}));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+// app.use(express.urlencoded({ extended: false}));
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({extended: true}));
 //sessions for local host
 //app.use(session({secret: 'bolsterblog', saveUninitialized: false, resave: false}));
 
@@ -79,7 +79,7 @@ app.get("/", async (req, res) => {
 //     }
 // })
 
-app.use('/articles', articleRouter);
+//app.use('/articles', articleRouter);
 
 //for localhost
 // app.listen(app.get('port'), () => {
