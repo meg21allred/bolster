@@ -11,7 +11,7 @@ const pool = new Pool({
     connectionString: connectionString, ssl: true
 });
 
-app.set("port", (process.env.PORT || 5000));
+app.set(/*"port", (*/process.env.PORT /* || 5000)*/);
 
 
 app.set('view engine', 'ejs');
