@@ -15,7 +15,7 @@ const pool = new Pool({
 //app.set("port", (process.env.PORT);
 
 
-// app.set('view engine', 'ejs');
+app.set('view engine', 'ejs');
 
 // app.use(express.urlencoded({ extended: false}));
 // app.use(bodyParser.json());
