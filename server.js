@@ -19,11 +19,14 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: false}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(session({secret: 'bolsterblog', saveUninitialized: false, resave: false}));
+//sessions for local host
+//app.use(session({secret: 'bolsterblog', saveUninitialized: false, resave: false}));
 
 
 app.get("/", async (req, res) => {
-    var user = req.session.username;
+    //sessions for local host
+   //var user = req.session.username;
+   var user;
         try {
             const client = await pool.connect();
             const result = await client.query('SELECT * FROM blog_entries ');

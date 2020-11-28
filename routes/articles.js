@@ -34,8 +34,8 @@ router.post('/login', async (req, res) => {
         bcrypt.compare(password, hash, function (err, hashResult) {
             if (hashResult) {
                 console.log('access granted');
-                //store session variable into user here
-                req.session.username = username;
+                //store session variable into user here for local host
+                //req.session.username = username;
                 res.redirect('/');
             } else {
                 console.log('access denied');  
@@ -106,16 +106,17 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.get('/logout', function(req,res){
+//log out of session in local host
+// router.get('/logout', function(req,res){
 	
-	req.session.destroy(function(err) {
-		if(err) {
-			console.log(err);
-		} else {
-			res.redirect('/');
-		}
-	});
+// 	req.session.destroy(function(err) {
+// 		if(err) {
+// 			console.log(err);
+// 		} else {
+// 			res.redirect('/');
+// 		}
+// 	});
 
-});
+// });
 
 module.exports = router;
