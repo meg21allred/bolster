@@ -3,7 +3,7 @@ const express = require("express");
 //const session = require('express-session');
 //const bodyParser = require('body-parser');
 const app = express();
-process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
+//process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
 // const { Pool } = require('pg');
 // let connectionString = process.env.DATABASE_URL; /*|| "postgres://bolster21:bolster1521@localhost:5432/bolsterdb"*/
@@ -24,7 +24,7 @@ process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 //app.use(session({secret: 'bolsterblog', saveUninitialized: false, resave: false}));
 
 
-app.get("/", async (req, res) => {
+app.get("/", (req, res) => {
     app.send('this is the homepage');
     //sessions for local host
    //var user = req.session.username;
