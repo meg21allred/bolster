@@ -14,9 +14,6 @@ const pool = new Pool({
 });
 
 
-//local variable for now.. to be in the database
-const users = [];
-
 router.get('/login', (req, res) => {
     res.render('articles/login.ejs');
 })
@@ -24,7 +21,6 @@ router.get('/login', (req, res) => {
 router.post('/login', async (req, res) => {
     var username = req.body.username;
     var password = req.body.password;
-    var user; //here is where we would get the username to store the session variable
     
     var params =  [username];
     try {
