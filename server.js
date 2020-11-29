@@ -1,5 +1,5 @@
 const express = require("express");
-//const articleRouter = require('./routes/articles');
+const articleRouter = require('./routes/articles');
 //const session = require('express-session');
 //const bodyParser = require('body-parser');
 const app = express();
@@ -76,9 +76,9 @@ app.get('/random', async (req, res) => {
         console.error(err);
         res.send("Error " + err);
     }
-})
+});
 
-//app.use('/articles', articleRouter);
+app.use('/articles', articleRouter);
 
 //for localhost
 // app.listen(app.get('port'), () => {
