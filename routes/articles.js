@@ -45,9 +45,9 @@ router.get('/login', (req, res) => {
     
 // });
 
-// router.get('/register', (req, res) => {
-//     res.render('articles/register.ejs');
-// })
+router.get('/register', (req, res) => {
+    res.render('articles/register.ejs');
+})
 
 // router.post('/register', async (req, res) => {
 //     try {
@@ -73,9 +73,9 @@ router.get('/login', (req, res) => {
 // })
 
 
-// router.get('/new', (req, res) => {
-//     res.render('articles/new')
-// });
+router.get('/new', (req, res) => {
+    res.render('articles/new')
+});
 
 // router.get('/id:id', (req, res) => {
 //     res.send('this is the id page');
