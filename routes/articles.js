@@ -1,7 +1,7 @@
 const express = require("express");
 //const bodyParser = require('body-parser');
 const router = express.Router();
-const bcrypt = require('bcrypt');
+//const bcrypt = require('bcrypt');
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
 router.use(express.urlencoded({extended: true}));
@@ -51,11 +51,13 @@ router.get('/register', (req, res) => {
 
 router.post('/register', async (req, res) => {
     try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10)
+        //heroku doesn't allow bcrypt
+        //const hashedPassword = await bcrypt.hash(req.body.password, 10)
      
         var username = req.body.username;
         var email = req.body.email;
-        var password = hashedPassword;
+        //var password = hashedPassword;
+        var password = req.body.password;
 
         var params = [username, email, password];
         try {
