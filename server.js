@@ -54,8 +54,6 @@ app.get('/random', async (req, res) => {
         var maximum = result.rows.length - 1;
         var randomnumber = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
         var randomBlogPost = `
-        <h1 class="mb-4">Create New Article</h1>
-            <a href="/articles/new" class="btn btn-success">New Article</a>
         <div class="container" id="randomDiv">
           <h1 >Random blog post</h1>
                 <div class="card mt-4">
