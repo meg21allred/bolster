@@ -18,32 +18,39 @@ router.get('/login', (req, res) => {
     res.render('articles/login.ejs');
 })
 
-// router.post('/login', async (req, res) => {
-//     var username = req.body.username;
-//     var password = req.body.password;
+router.post('/login', async (req, res) => {
+    var username = req.body.username;
+    var password = req.body.password;
     
-//     var params =  [username];
-//     try {
-//         const client = await pool.connect();
-//         const result = await client.query("SELECT user_password FROM user_account WHERE username = $1", params);
-//         var hash = result.rows[0].user_password;
-//         bcrypt.compare(password, hash, function (err, hashResult) {
-//             if (hashResult) {
-//                 console.log('access granted');
-//                 //store session variable into user here for local host
-//                 //req.session.username = username;
-//                 res.redirect('/');
-//             } else {
-//                 console.log('access denied');  
-//             }
-//         })
-//         client.release();
-//     } catch (err) {
-//         console.error(err);
-//         res.send("Error " + err);
-//     }
+    var params =  [username];
+    try {
+        const client = await pool.connect();
+        const result = await client.query("SELECT user_password FROM user_account WHERE username = $1", params);
+        //get password working with heroku and add session stuff later
+        var databasePassword = result.rows[0].user_password;
+        if (databasePassword == password) {
+            res.redirect('/');
+        } else {
+            res.redirect('/articles/login')
+        }
+        //var hash = result.rows[0].user_password;
+        // bcrypt.compare(password, hash, function (err, hashResult) {
+        //     if (hashResult) {
+        //         console.log('access granted');
+        //         //store session variable into user here for local host
+        //         //req.session.username = username;
+        //         res.redirect('/');
+        //     } else {
+        //         console.log('access denied');  
+        //     }
+        // })
+        client.release();
+    } catch (err) {
+        console.error(err);
+        res.send("Error " + err);
+    }
     
-// });
+});
 
 router.get('/register', (req, res) => {
     res.render('articles/register.ejs');
