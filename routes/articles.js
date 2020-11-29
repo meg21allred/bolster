@@ -49,28 +49,28 @@ router.get('/register', (req, res) => {
     res.render('articles/register.ejs');
 })
 
-// router.post('/register', async (req, res) => {
-//     try {
-//         const hashedPassword = await bcrypt.hash(req.body.password, 10)
+router.post('/register', async (req, res) => {
+    try {
+        const hashedPassword = await bcrypt.hash(req.body.password, 10)
      
-//         var username = req.body.username;
-//         var email = req.body.email;
-//         var password = hashedPassword;
+        var username = req.body.username;
+        var email = req.body.email;
+        var password = hashedPassword;
 
-//         var params = [username, email, password];
-//         try {
-//             const client = await pool.connect();
-//             const result = await client.query("INSERT INTO user_account (username, user_email, user_password) VALUES ($1, $2, $3)", params);
-//             client.release();
-//         } catch (err) {
-//             console.error(err);
-//             res.send("Error " + err);
-//         }
-//         res.redirect('/articles/login')
-//     } catch {
-//         res.redirect('/articles/register')
-//     }
-// })
+        var params = [username, email, password];
+        try {
+            const client = await pool.connect();
+            const result = await client.query("INSERT INTO user_account (username, user_email, user_password) VALUES ($1, $2, $3)", params);
+            client.release();
+        } catch (err) {
+            console.error(err);
+            res.send("Error " + err);
+        }
+        res.redirect('/articles/login')
+    } catch {
+        res.redirect('/articles/register')
+    }
+})
 
 
 router.get('/new', (req, res) => {
