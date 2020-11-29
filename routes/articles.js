@@ -1,22 +1,22 @@
 const express = require("express");
-const bodyParser = require('body-parser');
+//const bodyParser = require('body-parser');
 const router = express.Router();
-const bcrypt = require('bcrypt');
+//const bcrypt = require('bcrypt');
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
 router.use(express.urlencoded({extended: true}));
 
 
 const { Pool } = require('pg');
-let connectionString = process.env.DATABASE_URL; /* || "postgres://bolster21:bolster1521@localhost:5432/bolsterdb"*/
+let connectionString = process.env.DATABASE_URL;
 const pool = new Pool({
     connectionString: connectionString, ssl: true
 });
 
 
-// router.get('/login', (req, res) => {
-//     res.render('articles/login.ejs');
-// })
+router.get('/login', (req, res) => {
+    res.render('articles/login.ejs');
+})
 
 // router.post('/login', async (req, res) => {
 //     var username = req.body.username;
