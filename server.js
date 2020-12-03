@@ -21,7 +21,7 @@ app.set('view engine', 'ejs');
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({extended: true}));
 //sessions for local host
-//app.use(session({secret: 'bolsterblog', saveUninitialized: false, resave: false}));
+app.use(session({secret: 'bolsterblog', saveUninitialized: false, resave: false}));
 
 
 app.get("/", async (req, res) => {
