@@ -75,7 +75,7 @@ router.post('/register', async (req, res) => {
         var password = hashedP;
         //var password = req.body.password;
 
-        var params = [username, email, password];
+        var params = [username, email, hashedP];
         try {
             const client = await pool.connect();
             const result = await client.query("INSERT INTO user_account (username, user_email, user_password) VALUES ($1, $2, $3)", params);
