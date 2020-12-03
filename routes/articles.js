@@ -1,7 +1,7 @@
 const express = require("express");
 //const bodyParser = require('body-parser');
 const router = express.Router();
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt-nodejs');
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
 router.use(express.urlencoded({extended: true}));
