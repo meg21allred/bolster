@@ -36,7 +36,7 @@ router.post('/login', async (req, res) => {
         // } 
     
         var hash = result.rows[0].user_password;
-        bcrypt.compareSync(password, hash, function (err, hashResult) {
+        bcrypt.compare(password, hash, function (err, hashResult) {
             if (hashResult) {
                 console.log('access granted');
                 //store session variable into user here for local host
