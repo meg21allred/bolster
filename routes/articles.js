@@ -29,10 +29,12 @@ router.post('/login', async (req, res) => {
         //get password working with heroku and add session stuff later
         var databasePassword = result.rows[0].user_password;
         if (databasePassword == password) {
+            req.session.username = username;
             res.redirect('/');
         } else {
             res.redirect('/articles/login')
         }
+        
         //var hash = result.rows[0].user_password;
         // bcrypt.compare(password, hash, function (err, hashResult) {
         //     if (hashResult) {
