@@ -113,17 +113,17 @@ router.post('/', async (req, res) => {
     }
 });
 
-//log out of session in local host
-// router.get('/logout', function(req,res){
+//log out of session 
+router.get('/logout', function(req,res){
 	
-// 	req.session.destroy(function(err) {
-// 		if(err) {
-// 			console.log(err);
-// 		} else {
-// 			res.redirect('/');
-// 		}
-// 	});
+	req.session.destroy(function(err) {
+		if(err) {
+			console.log(err);
+		} else {
+			res.redirect('/');
+		}
+	});
 
-// });
+});
 
 module.exports = router;
