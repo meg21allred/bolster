@@ -60,9 +60,10 @@ router.get('/register', (req, res) => {
 
 router.post('/register', async (req, res) => {
     try {
+        let hashedP;
         //heroku doesn't allow bcrypt
         //const hashedPassword = await bcrypt.hash(req.body.password, 10)
-        let hashedP;
+        let hashedPassword = req.body.password;
         bcrypt.genSalt(10, function(salt) {
             bcrypt.hash(password, salt, null, function(err, hashedPassword) {
               hashedP = hashedPassword;
