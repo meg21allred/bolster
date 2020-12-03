@@ -27,7 +27,7 @@ app.use(session({secret: 'bolsterblog', saveUninitialized: false, resave: false}
 app.get("/", async (req, res) => {
     
     //sessions for local host
-   //var user = req.session.username;
+   var user = req.session.username;
    var user;
         try {
             const client = await pool.connect();
