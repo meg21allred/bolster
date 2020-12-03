@@ -28,24 +28,24 @@ router.post('/login', async (req, res) => {
         const result = await client.query("SELECT user_password FROM user_account WHERE username = $1", params);
         //get password working with heroku and add session stuff later
         var databasePassword = result.rows[0].user_password;
-        if (databasePassword == password) {
-            req.session.username = username;
-            res.redirect('/');
-        } else {
-            res.redirect('/articles/login')
-        }
+        // if (databasePassword == password) {
+        //     req.session.username = username;
+        //     res.redirect('/');
+        // } else {
+        //     res.redirect('/articles/login')
+        // }
         
-        //var hash = result.rows[0].user_password;
-        // bcrypt.compare(password, hash, function (err, hashResult) {
-        //     if (hashResult) {
-        //         console.log('access granted');
-        //         //store session variable into user here for local host
-        //         //req.session.username = username;
-        //         res.redirect('/');
-        //     } else {
-        //         console.log('access denied');  
-        //     }
-        // })
+        var hash = result.rows[0].user_password;
+        bcrypt.compare(password, hash, function (err, hashResult) {
+            if (hashResult) {
+                console.log('access granted');
+                //store session variable into user here for local host
+                req.session.username = username;
+                res.redirect('/');
+            } else {
+                console.log('access denied');  
+            }
+        })
         client.release();
     } catch (err) {
         console.error(err);
@@ -62,11 +62,17 @@ router.post('/register', async (req, res) => {
     try {
         //heroku doesn't allow bcrypt
         //const hashedPassword = await bcrypt.hash(req.body.password, 10)
+        let hashedP;
+        bcrypt.genSalt(10, function(salt) {
+            bcrypt.hash(password, salt, null, function(err, hashedPassword) {
+              hashedP = hashedPassword;
+            });
+          });
      
         var username = req.body.username;
         var email = req.body.email;
-        //var password = hashedPassword;
-        var password = req.body.password;
+        var password = hashedP;
+        //var password = req.body.password;
 
         var params = [username, email, password];
         try {
