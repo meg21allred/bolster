@@ -1,6 +1,6 @@
 const express = require("express");
 const articleRouter = require('./routes/articles');
-//const session = require('express-session');
+const session = require('express-session');
 //const bodyParser = require('body-parser');
 const app = express();
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
