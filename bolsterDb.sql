@@ -5,7 +5,8 @@ CREATE TABLE blog_entries (
     title VARCHAR(255),
     blog_date DATE DEFAULT CURRENT_DATE,
     blog_description VARCHAR(255),
-    markdown VARCHAR(255)
+    markdown VARCHAR(255),
+    blogger_id INT REFERENCES user_account(id)
 );
 
 CREATE TABLE user_account (
@@ -19,11 +20,11 @@ INSERT INTO user_account (username, user_email, user_password)
 VALUES ('catwoman21', 'catwoman@gmail.com', 'cat1521');
 
 
-INSERT INTO blog_entries (title, blog_description, markdown)
-VALUES ('First Post', 'This is my very first blog', 'whatever');
+INSERT INTO blog_entries (title, blog_description, markdown, blogger_id)
+VALUES ('First Post', 'This is my very first blog', 'whatever', 6);
 
-INSERT INTO blog_entries (title, blog_description, markdown)
-VALUES ('Second Post', 'This is my secong blog', 'whatever again');
+INSERT INTO blog_entries (title, blog_description, markdown, blogger_id)
+VALUES ('Second Post', 'This is my secong blog', 'whatever again', 6);
 
 CREATE USER bolster21 WITH PASSWORD 'bolster1521';
 
