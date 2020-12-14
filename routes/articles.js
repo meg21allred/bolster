@@ -8,18 +8,18 @@ router.use(express.urlencoded({extended: true}));
 router.use(express.static(__dirname + '/public'));
 
 //for heroku connection
-// const { Pool } = require('pg');
-// let connectionString = process.env.DATABASE_URL;
-// const pool = new Pool({
-//     connectionString: connectionString, ssl: true
-// });
+const { Pool } = require('pg');
+let connectionString = process.env.DATABASE_URL;
+const pool = new Pool({
+    connectionString: connectionString, ssl: true
+});
 
 //for local host connection
-const { Pool } = require('pg');
-let connectionString = "postgres://bolster21:bolster1521@localhost:5432/bolsterdb";
-const pool = new Pool({
-    connectionString: connectionString
-});
+// const { Pool } = require('pg');
+// let connectionString = "postgres://bolster21:bolster1521@localhost:5432/bolsterdb";
+// const pool = new Pool({
+//     connectionString: connectionString
+// });
 
 router.get('/login', (req, res) => {
     let user = req.session.username;

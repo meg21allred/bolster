@@ -5,21 +5,21 @@ const app = express();
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
 //heroku connection
-// const { Pool } = require('pg');
-// let connectionString = process.env.DATABASE_URL; /*|| "postgres://bolster21:bolster1521@localhost:5432/bolsterdb"*/
-// const pool = new Pool({
-//     connectionString: connectionString, ssl: true
-// });
-
-//locat host connection
 const { Pool } = require('pg');
-let connectionString = "postgres://bolster21:bolster1521@localhost:5432/bolsterdb"
+let connectionString = process.env.DATABASE_URL; /*|| "postgres://bolster21:bolster1521@localhost:5432/bolsterdb"*/
 const pool = new Pool({
-    connectionString: connectionString
+    connectionString: connectionString, ssl: true
 });
 
+//locat host connection
+// const { Pool } = require('pg');
+// let connectionString = "postgres://bolster21:bolster1521@localhost:5432/bolsterdb"
+// const pool = new Pool({
+//     connectionString: connectionString
+// });
+
 //for local host
-app.set("port", (5000));
+// app.set("port", (5000));
 
 
 app.use(express.static(__dirname + '/public'));
@@ -108,9 +108,9 @@ app.get('/random', async (req, res) => {
 app.use('/articles', articleRouter);
 
 //for localhost
-app.listen(app.get('port'), () => {
-    console.log('App Started on PORT: ', app.get('port'));
-});
+// app.listen(app.get('port'), () => {
+//     console.log('App Started on PORT: ', app.get('port'));
+// });
 
 //for heroku
-//app.listen(process.env.PORT);
+app.listen(process.env.PORT);
