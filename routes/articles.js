@@ -5,48 +5,56 @@ const bcrypt = require('bcryptjs');
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
 router.use(express.urlencoded({extended: true}));
+router.use(express.static(__dirname + '/public'));
 
 //for heroku connection
-const { Pool } = require('pg');
-let connectionString = process.env.DATABASE_URL;
-const pool = new Pool({
-    connectionString: connectionString, ssl: true
-});
-
-//for local host connection
 // const { Pool } = require('pg');
-// let connectionString = "postgres://bolster21:bolster1521@localhost:5432/bolsterdb";
+// let connectionString = process.env.DATABASE_URL;
 // const pool = new Pool({
-//     connectionString: connectionString
+//     connectionString: connectionString, ssl: true
 // });
 
+//for local host connection
+const { Pool } = require('pg');
+let connectionString = "postgres://bolster21:bolster1521@localhost:5432/bolsterdb";
+const pool = new Pool({
+    connectionString: connectionString
+});
+
 router.get('/login', (req, res) => {
-    res.render('articles/login.ejs');
+    let user = req.session.username;
+    let error;
+    res.render('articles/login.ejs', {user: user, error: error});
 })
 
 router.post('/login', async (req, res) => {
     var username = req.body.username;
     var password = req.body.password;
-    
+    var error;
     var params =  [username];
     try {
         const client = await pool.connect();
-        const result = await client.query("SELECT user_password, id FROM user_account WHERE username = $1", params);
-        
-        //get hashed password and compare to entered password
-        var hash = result.rows[0].user_password;
-        bcrypt.compare(password, hash, function (err, hashResult) {
-            if (hashResult) {
-                console.log('access granted');
-                //store session variable username
-                req.session.username = username;
-                req.session.bloggerId = result.rows[0].id;
-                res.redirect('/');
-            } else {
-                console.log('access denied');  
-            }
-        })
-        client.release();
+        const result = await client.query("SELECT * FROM user_account WHERE username = $1", params);
+        if (result.rows.length >= 1 ) {
+            //get hashed password and compare to entered password
+            var hash = result.rows[0].user_password;
+            bcrypt.compare(password, hash, function (err, hashResult) {
+                if (hashResult) {
+                    console.log('access granted');
+                    //store session variable username
+                    req.session.username = username;
+                    req.session.bloggerId = result.rows[0].id;
+                    res.redirect('/');
+                } else {
+                    console.log('access denied');  
+                }
+            })
+            client.release();
+        } else {
+            error = "Username or password is incorrect";
+            res.render("articles/login.ejs", {error: error});
+        }
+       
     } catch (err) {
         console.error(err);
         res.send("Error " + err);
@@ -55,16 +63,46 @@ router.post('/login', async (req, res) => {
 });
 
 router.get('/register', (req, res) => {
-    res.render('articles/register.ejs');
+    let user = req.session.username;
+    let error1;
+    res.render('articles/register.ejs', {user: user, error1: error1});
 })
 
 router.post('/register', async (req, res) => {
+    var username = req.body.username;
+    var email = req.body.email;
+    var error1;
+    console.log('username: ', username)
+    let userParams = [username];
+    try {
+        const client = await pool.connect();
+        const result1 = await client.query("SELECT * FROM user_account WHERE username = $1", userParams);
+        client.release();
+        if(result1.rows.length >= 1) {
+            if (result1.rows[0].username == username) {
+                error1 = "Username already in use";
+                res.render('articles/register.ejs', {error1: error1})
+                
+            }
+        }
+        let emailParams = [email];
+        const result2 = await client.query("SELECT * FROM user_account WHERE user_email = $1", emailParams);
+        if (result2.rows.length >= 1) {
+            if (result2.rows[0].user_email == email) {
+                error1 = "email already in use";
+                res.render('articles/register.ejs', {error1: error1})
+            }
+        }
+        
+    } catch (err) {
+        console.error(err);
+        res.send("Error " + err);
+    }
+console.log("didnt find username");
     try {
         //hash password
         const hashedPassword = await bcrypt.hash(req.body.password, 10)
        
-        var username = req.body.username;
-        var email = req.body.email;
         var password = hashedPassword;
         //var password = req.body.password;
 
@@ -85,17 +123,20 @@ router.post('/register', async (req, res) => {
 
 
 router.get('/new', (req, res) => {
-    res.render('articles/new')
+    let user = req.session.username;
+    console.log("user: " + user);
+    res.render('articles/new', {user: user})
 });
 
 router.get('/edit:id', async (req, res) => {
     let id = req.params.id;
-
+    let user = req.session.username;
+    let params = [id];
     try {
         const client = await pool.connect();
         const result = await client.query('SELECT * FROM blog_entries WHERE id = $1', params);
         //console.log(result.rows);
-        res.render('articles/edit', {articles: result.rows[0]});
+        res.render('articles/edit', {articles: result.rows[0], user: user});
         client.release();
         
     } catch (err) {
@@ -125,13 +166,14 @@ router.post('/edit:id', async (req, res) => {
 })
 
 router.get('/id:id', async (req, res) => {
+    let user = req.session.username;
     let id = req.params.id;
     params = [id];
     try {
         const client = await pool.connect();
         const result = await client.query('SELECT * FROM blog_entries WHERE id = $1', params);
         //console.log(result.rows);
-        res.render('articles/show', {article: result.rows[0]});
+        res.render('articles/show', {article: result.rows[0], user: user});
         client.release();
         
     } catch (err) {
@@ -147,6 +189,7 @@ router.post('/', async (req, res) => {
     var blogMarkdown = req.body.markdown;
     var articleId; 
     var bloggerId = req.session.bloggerId;
+    let user = req.session.username;
 
     var params = [blogTitle, blogDescription, blogMarkdown, bloggerId];
     try {
@@ -175,10 +218,9 @@ router.post('/', async (req, res) => {
                 description: blogDescription,
                 markdown: blogMarkdown,
           }
-            res.render('articles/new', {article: article})
+            res.render('articles/new', {article: article, user: user})
         }
         
-        //res.redirect('/');
     } catch (err) {
         console.error(err);
         res.send("Error " + err);
